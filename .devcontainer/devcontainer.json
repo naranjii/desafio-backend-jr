@@ -4,7 +4,8 @@
     "service": "app",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "forwardPorts": [
-        3000
+        3000,
+        3306
     ],
     "initializeCommand": "ls",
     "mounts": [
@@ -19,7 +20,8 @@
             "extensions": [
                 "PKief.material-icon-theme",
                 "yoavbls.pretty-ts-errors",
-                "biomejs.biome"
+                "biomejs.biome",
+                "Prisma.prisma"
             ]
         }
     }
