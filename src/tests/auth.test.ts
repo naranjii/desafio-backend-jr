@@ -15,10 +15,10 @@ describe("Auth routes", () => {
                 password: "123456"
             });
 
-        expect(res.status).toBe(201);
-        expect(res.body).toHaveProperty("id");
-        expect(res.body).toHaveProperty("email", "testuser@example.com");
-        expect(res.body).toHaveProperty("role", "consultant");
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty("id");
+    expect(res.body).toHaveProperty("email", "supla@example.com");
+    expect(res.body).toHaveProperty("role", "consultant");
     });
     it("registra um usuário 'aprovador'", async () => {
         const res = await request(app)
