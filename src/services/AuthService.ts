@@ -2,7 +2,7 @@ import { prisma } from "../config/db";
 import * as bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 
-export async function register(name: string, email: string, UserRole, password: string) {
+export async function register(name: string, email: string, role: "consultant", password: string) {
   const hashed = await bcrypt.hash(password, 10);
   return prisma.user.create({
     data: { name, email, role, password: hashed }
