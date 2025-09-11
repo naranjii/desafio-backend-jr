@@ -1,14 +1,13 @@
-import { prisma } from "../config/db";
+import { Prisma } from '@prisma/client';
 
-export async function createRequest(userId: number, data: any) {
+export async function createRequest(userId: string, data: { items: Prisma.RequestItemCreateManyPurchaseRequestInput[] }) {
   return prisma.purchaseRequest.create({
     data: {
-      status: "draft",
       userId,
       items: {
-        create: data.items || []
-      }
+        create: data.items || [],
+      },
     },
-    include: { items: true }
+    include: { items: true },
   });
 }
