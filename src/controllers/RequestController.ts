@@ -18,3 +18,10 @@ export async function getById(req: Request, res: Response) {
   const request = await RequestService.getRequestById(id);
   res.json(request);
 }
+
+export async function update(req: Request, res: Response) {
+  const id = req.params.id;
+  const data = req.body;
+  const updated = await RequestService.updateRequest(id, data);
+  res.json(updated);
+}
