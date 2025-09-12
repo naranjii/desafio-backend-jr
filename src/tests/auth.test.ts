@@ -1,8 +1,12 @@
 import request from "supertest";
 import app from "../app";
 import { prisma } from "../config/db";
+import { clearDB } from "./helpers";
 
 describe("Auth routes", () => {
+    beforeEach(async () => {
+        await clearDB()
+    })
     afterAll(async () => {
         await prisma.$disconnect();
     });
