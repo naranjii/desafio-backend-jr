@@ -46,6 +46,11 @@ model ApprovalHistory {
   requestId  String
   request    PurchaseRequest @relation(fields: [requestId], references: [id])
 }
+enum approvalStatus {
+  draft
+  approved
+  declined
+}
 
 enum UserRole {
   approver
