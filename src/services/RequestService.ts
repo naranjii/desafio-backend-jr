@@ -1,17 +1,16 @@
+import { RequestItemInterface } from "../interfaces/RequestItemInterface";
 import { RequestRepository } from "../repositories/RequestRepository";
-import { RequestItem } from "../models/RequestItem";
 
-export async function createRequest(userId: string, requestItem: RequestItem) {
+export async function createRequest(userId: string, requestItem: RequestItemInterface[]) {
   return RequestRepository.create({ userId, requestItem });
 }
-export async function updateRequest(id: string, requestItem: RequestItem) {
+
+export async function updateRequest(id: string, requestItem: RequestItemInterface) {
   return RequestRepository.update({ id, requestItem });
 }
 export async function submitRequest(id: string) {
   return RequestRepository.submit(id);  
 }
-
-
 export async function getAllRequests() {
   return RequestRepository.getAll();
 }

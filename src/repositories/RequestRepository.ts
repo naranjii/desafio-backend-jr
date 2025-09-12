@@ -1,14 +1,18 @@
 import { prisma } from "../config/db";
-import { ApprovalStatus } from "../generated/prisma";
-import { RequestItem } from "../models/RequestItem";
+import { ApprovalStatus,  } from "../generated/prisma";
+import { RequestItemInterface } from "../interfaces/RequestItemInterface";
+
 
 export const RequestRepository = {
-    async create({ userId, requestItem }: { userId: string, requestItem: RequestItem }) {   // => POST /requests
+    async create({ userId, requestItem }: { userId: string, requestItem: RequestItemInterface[] }) {   // => POST /requests
         return prisma.purchaseRequest.create({
-            data: { userId, status: ApprovalStatus.draft, items: { create: requestItem } }
+            data: { userId, status: ApprovalStatus.draft, items: { createMany: { data: requestItem } } },
+            include: {
+                items: true,
+            }
         });
     },
-    async update({ id, requestItem }: { id: string, requestItem: RequestItem }) {           // => PATCH /requests/:id
+    async update({ id, requestItem }: { id: string, requestItem: RequestItemInterface }) {           // => PATCH /requests/:id
         return prisma.purchaseRequest.update({
             where: { id },
             data: { items: { create: requestItem } }
@@ -20,7 +24,7 @@ export const RequestRepository = {
             data: { status: ApprovalStatus.submitted }
         });
     },
-
+    
     async getAll() {                                                                        // => GET /requests
         return prisma.purchaseRequest.findMany();
     },

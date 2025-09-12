@@ -23,6 +23,5 @@ describe('ReportService (unit)', () => {
         const summary = await ReportService.getSummary();
         const draft = summary.find((s: any) => s.status === 'draft');
         const approved = summary.find((s: any) => s.status === 'approved');
-        console.log(summary);
     });
 });
