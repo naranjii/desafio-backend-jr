@@ -3,10 +3,6 @@ import * as RequestService from "../../services/RequestService";
 import { clearDB } from "../helpers";
 
 describe("RequestService (unit)", () => {
-    beforeEach(async () => {
-        await clearDB();
-    });
-
     afterAll(async () => {
         await prisma.$disconnect();
     });
