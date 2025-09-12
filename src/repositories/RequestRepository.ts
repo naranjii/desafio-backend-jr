@@ -1,5 +1,4 @@
 import { prisma } from "../config/db";
-import { approve, reject } from "../controllers/RequestController";
 import { ApprovalStatus, } from "../generated/prisma";
 import { RequestItemInterface } from "../interfaces/RequestItemInterface";
 
@@ -46,10 +45,10 @@ export const RequestRepository = {
             data: { status: ApprovalStatus.rejected }
         });
     },
-
     async approve(id: string) {
         return prisma.purchaseRequest.update({
             where: { id },
-            data: { status: ApprovalStatus.approved });
-        }
+            data: { status: ApprovalStatus.approved }
+        });
+    }
 }
