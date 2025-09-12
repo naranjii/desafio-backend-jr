@@ -7,6 +7,7 @@
 		"prisma:migrate": "prisma migrate dev",
 		"prisma:studio": "prisma studio",
 		"test": "jest --runInBand --detectOpenHandles",
+		"test:pr": "jest --runInBand --detectOpenHandles -t 'Purchase Request routes'",
 		"test:watch": "jest --watch",
 		"lint": "eslint . --ext .ts",
 		"format": "prettier --write ."

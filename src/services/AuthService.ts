@@ -1,4 +1,3 @@
-import { prisma } from "../config/db";
 import * as bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import { UserRepository } from "../repositories/UserRepository";
