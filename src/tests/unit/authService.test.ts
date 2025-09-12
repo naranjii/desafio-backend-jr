@@ -3,6 +3,7 @@ import { UserRepository } from "../../repositories/UserRepository";
 import * as bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { clearDB } from "../helpers";
+import { prisma } from "../../config/db";
 
 jest.mock("../../repositories/UserRepository");
 jest.mock("bcryptjs", () => ({
@@ -11,8 +12,13 @@ jest.mock("bcryptjs", () => ({
 }));
 
 describe("AuthService", () => {
+    beforeEach(async () => {
+        await clearDB();
+    });
+
     afterEach(() => {
         jest.clearAllMocks();
+        jest.restoreAllMocks();
     });
 
     describe("register", () => {
@@ -76,5 +82,9 @@ describe("AuthService", () => {
             expect((decoded as any).id).toBe("uuid-123");
         });
 
+    });
+    afterAll(async () => {
+        await clearDB();
+        await prisma.$disconnect();
     });
 });

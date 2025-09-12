@@ -1,8 +1,14 @@
 import { prisma } from "../../config/db";
 import * as ReportService from "../../services/ReportService";
+import { clearDB } from "../helpers";
 
 describe('ReportService (unit)', () => {
+    beforeEach(async () => {
+        await clearDB();
+    });
+
     afterAll(async () => {
+        await clearDB();
         await prisma.$disconnect();
     });
 
