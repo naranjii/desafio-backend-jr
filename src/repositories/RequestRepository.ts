@@ -1,5 +1,6 @@
 import { prisma } from "../config/db";
-import { ApprovalStatus,  } from "../generated/prisma";
+import { approve, reject } from "../controllers/RequestController";
+import { ApprovalStatus, } from "../generated/prisma";
 import { RequestItemInterface } from "../interfaces/RequestItemInterface";
 
 
@@ -24,7 +25,7 @@ export const RequestRepository = {
             data: { status: ApprovalStatus.submitted }
         });
     },
-    
+
     async getAll() {                                                                        // => GET /requests
         return prisma.purchaseRequest.findMany();
     },
@@ -38,5 +39,17 @@ export const RequestRepository = {
             by: ["status"],
             _count: { status: true }
         });
-    }
+    },
+    async reject(id: string) {
+        return prisma.purchaseRequest.update({
+            where: { id },
+            data: { status: ApprovalStatus.rejected }
+        });
+    },
+
+    async approve(id: string) {
+        return prisma.purchaseRequest.update({
+            where: { id },
+            data: { status: ApprovalStatus.approved });
+        }
 }

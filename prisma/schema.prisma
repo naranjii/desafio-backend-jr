@@ -50,7 +50,7 @@ enum ApprovalStatus {
   draft
   submitted
   approved
-  declined
+  rejected
 }
 
 enum UserRole {

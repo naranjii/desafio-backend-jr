@@ -19,6 +19,8 @@ export async function getById(req: Request, res: Response) {
   res.json(request);
 }
 
+// para ambos abaixo falta limitar os pedidos a 'draft's
+
 export async function update(req: Request, res: Response) {
   const id = req.params.id;
   const data = req.body;
@@ -28,8 +30,12 @@ export async function update(req: Request, res: Response) {
 
 export async function submit(req: Request, res: Response) {
   const id = req.params.id;
-  const data = req.body;
-  // Administração de privilégios entraria aqui<= 
   const submitted = await RequestService.submitRequest(id);
   res.json(submitted);
+}
+
+export async function approve(req: Request, res: Response) {
+}
+
+export async function reject(req: Request, res: Response) {
 }
