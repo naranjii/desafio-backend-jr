@@ -1,16 +1,16 @@
 import { prisma } from "../config/db";
 import * as bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
+import { UserRepository } from "../repositories/UserRepository";
+import { UserRole } from "../generated/prisma";
 
-export async function register(name: string, email: string, role: "consultant", password: string) {
+export async function register(name: string, email: string, password: string, role: UserRole) {
   const hashed = await bcrypt.hash(password, 10);
-  return prisma.user.create({
-    data: { name, email, role, password: hashed }
-  });
+  return UserRepository.create({ name, email, role, hashedPassword: hashed })
 }
 
 export async function login(email: string, password: string) {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await UserRepository.findByEmail(email);
   if (!user) throw new Error("User not found");
   const valid = await bcrypt.compare(password, user.password);
   if (!valid) throw new Error("Invalid password");
