@@ -2,10 +2,10 @@ import { RequestRepository } from "../repositories/RequestRepository";
 import { RequestItem } from "../models/RequestItem";
 
 export async function createRequest(userId: string, requestItem: RequestItem) {
-  return RequestRepository.create({userId, requestItem});
+  return RequestRepository.create({ userId, requestItem });
 }
 export async function updateRequest(id: string, requestItem: RequestItem) {
-  return RequestRepository.update({id, requestItem});
+  return RequestRepository.update({ id, requestItem });
 }
 
 export async function getAllRequests() {
