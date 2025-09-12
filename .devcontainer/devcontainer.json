@@ -1,13 +1,15 @@
 {
-    "name": "Desafio",
+    "name": "Purchase Requests API",
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "forwardPorts": [
         3000,
-        3306
+        3306,
+        3307
     ],
     "initializeCommand": "ls",
+    "postCreateCommand": "bash ./.devcontainer/generate-env.sh",
     "mounts": [
         "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached"
     ],
