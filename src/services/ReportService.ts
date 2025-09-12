@@ -1,9 +1,6 @@
-import { prisma } from "../config/db";
+import { RequestRepository } from "../repositories/RequestRepository";
 
 export async function getSummary() {
-  const statuses = await prisma.purchaseRequest.groupBy({
-    by: ["status"],
-    _count: { status: true }
-  });
+  const statuses = await RequestRepository.getByStatus();
   return statuses;
 }

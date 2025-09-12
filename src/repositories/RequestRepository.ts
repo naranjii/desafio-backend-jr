@@ -12,5 +12,11 @@ export const RequestRepository = {
     },
     async getById(id: string) {
         return prisma.purchaseRequest.findUnique({ where: { id } })
+    },
+    async getByStatus() {
+        return prisma.purchaseRequest.groupBy({
+            by: ["status"],
+            _count: { status: true }
+        });
     }
 }
