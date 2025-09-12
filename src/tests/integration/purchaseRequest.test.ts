@@ -1,12 +1,8 @@
 import request from "supertest";
-import app from "../app";
-import { prisma } from "../config/db";
-import { clearDB } from "./helpers";
+import app from "../../app";
+import { prisma } from "../../config/db";
 
 describe("Purchase Request routes", () => {
-    beforeEach(async () => {
-        await clearDB()
-    })
     afterAll(async () => {
         await prisma.$disconnect();
     });
@@ -14,8 +10,8 @@ describe("Purchase Request routes", () => {
         const userRes = await request(app)
             .post("/auth/register")
             .send({
-                name: "Consultant User",
-                email: "consul-purchase-request@test.com"
+                name: "Purchase Request User",
+                email: "purchase-request@integrationtest.com"
                 , password: "123456"
             });
         expect(userRes.status).toBe(201);

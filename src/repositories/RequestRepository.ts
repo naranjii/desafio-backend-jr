@@ -1,10 +1,10 @@
 import { prisma } from "../config/db";
-import { approvalStatus, PrismaClient, UserRole } from "../generated/prisma";
+import { approvalStatus } from "../generated/prisma";
 
 export const RequestRepository = {
     async create({ id, status, userId }: { id: string, status: approvalStatus, userId: string }) {
         return prisma.purchaseRequest.create({
-            data: { id, userId, status: 'draft' }
+            data: { id, userId, status }
         });
     },
     async getAll() {
