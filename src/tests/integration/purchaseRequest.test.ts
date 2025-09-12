@@ -1,9 +1,15 @@
 import request from "supertest";
 import app from "../../app";
 import { prisma } from "../../config/db";
+import { clearDB } from "../helpers";
 
 describe("Purchase Request routes", () => {
+    beforeEach(async () => {
+        await clearDB();
+    });
+
     afterAll(async () => {
+        await clearDB();
         await prisma.$disconnect();
     });
     it("cria uma requisição de compra", async () => {

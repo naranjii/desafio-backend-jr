@@ -4,7 +4,12 @@ import { prisma } from "../../config/db";
 import { clearDB } from "../helpers";
 
 describe("Auth routes", () => {
+    beforeEach(async () => {
+        await clearDB();
+    });
+
     afterAll(async () => {
+        await clearDB();
         await prisma.$disconnect();
     });
     it("registra um usuário 'consultor'", async () => {
