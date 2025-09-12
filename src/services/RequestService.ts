@@ -8,6 +8,8 @@ export async function updateRequest(id: string, requestItem: RequestItem) {
   return RequestRepository.update({ id, requestItem });
 }
 
+
+
 export async function getAllRequests() {
   return RequestRepository.getAll();
 }

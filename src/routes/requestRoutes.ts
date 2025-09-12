@@ -6,4 +6,5 @@ router.use(authMiddleware);
 router.post("/", RequestController.create);
 router.get("/", RequestController.list);
 router.get("/:id", RequestController.getById);
+router.patch("/:id", RequestController.update);
 export default router;
