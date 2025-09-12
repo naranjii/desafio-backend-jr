@@ -11,9 +11,6 @@ jest.mock("bcryptjs", () => ({
 }));
 
 describe("AuthService", () => {
-    beforeEach(async () => {
-        await clearDB()
-    })
     afterEach(() => {
         jest.clearAllMocks();
     });
