@@ -33,7 +33,7 @@ describe("AuthService", () => {
                     password: "hashed-pass",
                 });
 
-            const user = await AuthService.register("Mat", "mat@test.com", "pass123");
+            const user = await AuthService.register("Mat", "mat@test.com", "pass123", "consultant");
 
             expect(bcrypt.hash).toHaveBeenCalledWith("pass123", 10);
 
@@ -66,7 +66,12 @@ describe("AuthService", () => {
 
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
-            const token = await AuthService.login("mat@test.com", "pass123");
+            const token = await AuthService.login("mat@test.com", "pass123")
+            if (!token) {
+                console.log("Token JWT ausente. Login falhou.")
+            } else {
+                console.log(`Token JWT retornado. Login sucedido. (JWT=${token.toString().slice(0, 20)}...)`)
+            };
 
             expect(bcrypt.compare).toHaveBeenCalledWith("pass123", "hashed");
 
