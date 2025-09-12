@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DBTEST_URL")
+  url      = env("DB_URL_TEST")
 }
 
 model User {
