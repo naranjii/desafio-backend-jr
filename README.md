@@ -1,8 +1,11 @@
-# desafio-backend-jr
-Descrição do desafio :
+<h1> 'desafio-backend-jr': MatheusLaranjeira@Suplos</h1>
+<h2>Descrição do desafio :</h2>
+<p>'MVP de sistema de gestão de requisições de compra, que permite a usuários cadastrar requisições, adicionar itens e acompanhar o status até aprovação ou rejeição.'</p>
+<h2>Feature stack:</h2>
 
-MVP de sistema de gestão de requisições de compra, que permite a usuários cadastrar requisições, adicionar itens e acompanhar o status até aprovação ou rejeição.
 
+---
+<h4>Árvore de diretórios:</h4>
 ```directory tree
 desafio-backend-jr/
 │  .env
@@ -55,10 +58,16 @@ desafio-backend-jr/
 ```
 
 Uso de inteligências artificiais:
-Lorem Ipsum copilot nas configurações iniciais (.devcontainer/) de containers e trechos de jest em src/tests/
+Lorem Ipsum copilot usado na documentação, configurações iniciais (.devcontainer/ prisma placeholders), trechos de jest em src/tests/ e debugging.
 
 
 ---
 
 Dependências localizadas em ```package.json```
-
+```bash
+pnpm install
+pnpm prisma generate
+pnpm prisma migrate dev
+pnpm test
+pnpm dev
+```
