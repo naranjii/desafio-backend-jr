@@ -14,6 +14,12 @@ export const RequestRepository = {
             data: { items: { create: requestItem } }
         });
     },
+    async submit(id: string) {                                                               // => POST /requests/:id/submit
+        return prisma.purchaseRequest.update({
+            where: { id },
+            data: { status: ApprovalStatus.submitted }
+        });
+    },
 
     async getAll() {                                                                        // => GET /requests
         return prisma.purchaseRequest.findMany();
