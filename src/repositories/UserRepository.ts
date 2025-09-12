@@ -2,7 +2,7 @@ import { prisma } from "../config/db";
 import { PrismaClient, UserRole } from "../generated/prisma";
 
 export const UserRepository = {
-    async create({ name, email, role, hashedPassword }: {
+    async create({ name, email, role, hashedPassword }: {                                       // => POST /auth/register
         name: string, email: string, role: UserRole, hashedPassword: string
     }) {
         return prisma.user.create({
@@ -10,7 +10,7 @@ export const UserRepository = {
         });
     },
 
-    async findByEmail(email: string) {
+    async findByEmail(email: string) {                                                          // => POST /auth/login
         return prisma.user.findUnique({ where: { email } })
     }
 }
