@@ -48,6 +48,7 @@ model ApprovalHistory {
 }
 enum ApprovalStatus {
   draft
+  submitted
   approved
   declined
 }

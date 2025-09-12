@@ -25,3 +25,11 @@ export async function update(req: Request, res: Response) {
   const updated = await RequestService.updateRequest(id, data);
   res.json(updated);
 }
+
+export async function submit(req: Request, res: Response) {
+  const id = req.params.id;
+  const data = req.body;
+  // Administração de privilégios entraria aqui<= 
+  const submitted = await RequestService.submitRequest(id);
+  res.json(submitted);
+}

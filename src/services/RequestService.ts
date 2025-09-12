@@ -7,7 +7,9 @@ export async function createRequest(userId: string, requestItem: RequestItem) {
 export async function updateRequest(id: string, requestItem: RequestItem) {
   return RequestRepository.update({ id, requestItem });
 }
-
+export async function submitRequest(id: string) {
+  return RequestRepository.submit(id);  
+}
 
 
 export async function getAllRequests() {
