@@ -1,11 +1,17 @@
 import { prisma } from "../config/db";
-import { approvalStatus } from "../generated/prisma";
+import { ApprovalStatus } from "../generated/prisma";
 import { RequestItem } from "../models/RequestItem";
 
 export const RequestRepository = {
     async create({userId, requestItem }: { userId: string, requestItem: RequestItem  }) {
         return prisma.purchaseRequest.create({
-            data: { userId, status: approvalStatus.draft, items: { create: requestItem } }
+            data: { userId, status: ApprovalStatus.draft, items: { create: requestItem } }
+        });
+    },
+    async update({id, requestItem}:{id: string, requestItem: RequestItem  }) {
+        return prisma.purchaseRequest.update({
+            where: { id },
+            data: { items: { create: requestItem } }
         });
     },
 
@@ -17,7 +23,7 @@ export const RequestRepository = {
         return prisma.purchaseRequest.findUnique({ where: { id } })
     },
 
-    async getSummary() {
+    async getByStatus() {
         return prisma.purchaseRequest.groupBy({
             by: ["status"],
             _count: { status: true }
