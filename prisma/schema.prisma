@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DB_URL")
+  url      = env("DB_URL_TEST")
 }
 
 model User {
@@ -45,6 +45,11 @@ model ApprovalHistory {
   approvedBy Int
   requestId  String
   request    PurchaseRequest @relation(fields: [requestId], references: [id])
+}
+enum approvalStatus {
+  draft
+  approved
+  declined
 }
 
 enum UserRole {

@@ -3,6 +3,8 @@ Descrição do desafio :
 
 MVP de sistema de gestão de requisições de compra, que permite a usuários cadastrar requisições, adicionar itens e acompanhar o status até aprovação ou rejeição.
 
+---
+
 Árvore piloto baseada em template :
 
 desafio-backend-jr/
@@ -54,4 +56,11 @@ desafio-backend-jr/
        ├─ auth.test.ts
        └─ request.test.ts
 
+---
+Uso de inteligências artificiais:
+Lorem Ipsum copilot nas configurações iniciais (.devcontainer/) de containers e trechos de jest em src/tests/
+
+---
+
 Dependências localizadas em ```package.json```
+
