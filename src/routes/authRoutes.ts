@@ -2,8 +2,10 @@ import { Router } from "express";
 import * as AuthController from "../controllers/AuthController";
 import { validationMiddleware } from "../middlewares/validationMiddleware";
 import { loginDto, registerDto } from "../dtos/auth.dto";
+import { router } from "../router";
 
-const router = Router();
+
+
 
 router.post(
 	"/register",

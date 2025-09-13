@@ -1,7 +1,7 @@
 import * as bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserRepository } from "../repositories/UserRepository";
-import { RegisterDto } from "../dtos/auth.dto";
+import type { RegisterDto } from "../dtos/auth.dto";
 import { ConflictError } from "../errors/conflict.error";
 import { NotFoundError } from "../errors/notFound.error";
 import { AuthenticationError } from "../errors/authentication.error";
