@@ -28,10 +28,12 @@ describe("Purchase Request routes", () => {
             .post("/requests")
             .set("Authorization", `Bearer ${token}`)
             .send(
-                [
-                    { name: "Item 1", quantity: 2, price: 10.5 },
-                    { name: "Item 2", quantity: 1, price: 20.0 }
-                ]
+                {
+                    items: [
+                        { name: "Item 1", quantity: 2, price: 10.5 },
+                        { name: "Item 2", quantity: 1, price: 20.0 }
+                    ]
+                }
             );
 
         expect(reqRes.status).toBe(201);

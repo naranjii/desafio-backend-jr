@@ -26,17 +26,4 @@ describe("Auth routes", () => {
     expect(res.body).toHaveProperty("email", "supla@example.com");
     expect(res.body).toHaveProperty("role", "consultant");
     });
-    it("registra um usuário 'aprovador'", async () => {
-        const res = await request(app)
-            .post("/auth/register")
-            .send({
-                name: "Approver User",
-                email: "approver@example.com",
-                password: "123456",
-                role: "approver"
-            });
-        expect(res.status).toBe(201);
-        expect(res.body).toHaveProperty("id");
-        expect(res.body).toHaveProperty("role", "approver");
-    });
 });

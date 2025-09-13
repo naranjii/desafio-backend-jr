@@ -25,8 +25,5 @@ describe('ReportService (unit)', () => {
         const submitted = summary.find((s: any) => s.status === 'submitted');
         const approved = summary.find((s: any) => s.status === 'approved');
         const declined = summary.find((s: any) => s.status === 'declined');
-
-        //expect(draft._count.status).toBe(1);
-        //expect(approved._count.status).toBe(2) (...)
     });
 });

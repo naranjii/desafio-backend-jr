@@ -11,7 +11,7 @@ export function validationMiddleware(schema: z.ZodObject<any, any>) {
                 const errorMessages = error.issues.map((issue: any) => ({
                     message: `${issue.path.join('.')} is ${issue.message}`,
                 }))
-                res.status(409).json({ error: 'Invalid data', details: errorMessages });
+                res.status(422).json({ error: 'Invalid data', details: errorMessages });
             } else {
                 res.status(500).json({ error: 'Internal Server Error' });
             }

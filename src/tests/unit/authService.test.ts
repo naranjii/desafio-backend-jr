@@ -16,7 +16,12 @@ describe("AuthService", () => {
         await clearDB();
     });
 
-    afterEach(() => {
+    afterAll(async () => {
+        await clearDB();
+        await prisma.$disconnect();
+    });
+
+    afterAll(() => {
         jest.clearAllMocks();
         jest.restoreAllMocks();
     });
@@ -33,7 +38,6 @@ describe("AuthService", () => {
                     name: "Mat",
                     email: "mat@test.com",
                     role: "consultant",
-                    password: "hashed-pass",
                 });
 
             const user = await AuthService.register({ email: "mat@test.com", name: 'Mat', password: "pass123" });
@@ -52,8 +56,19 @@ describe("AuthService", () => {
                 name: "Mat",
                 email: "mat@test.com",
                 role: "consultant",
-                password: "hashed-pass",
             });
+        });
+
+        it("throws if email already in use", async () => {
+            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+                id: "uuid-123",
+                email: "mat@test.com",
+                password: "hashed-pass",
+                name: "Mat",
+                role: "consultant",
+            });
+
+            await expect(AuthService.register({ email: "mat@test.com", name: 'Mat', password: "pass123" })).rejects.toThrow("Email already in use");
         });
     });
 
@@ -82,9 +97,5 @@ describe("AuthService", () => {
             expect((decoded as any).id).toBe("uuid-123");
         });
 
-    });
-    afterAll(async () => {
-        await clearDB();
-        await prisma.$disconnect();
     });
 });

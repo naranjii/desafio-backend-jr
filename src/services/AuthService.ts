@@ -12,7 +12,7 @@ export async function register(data: RegisterDto) {
   const user = await UserRepository.findByEmail(email)
   if (user) throw new ConflictError('Email already in use')
   const hashed = await bcrypt.hash(password, 10);
-  return UserRepository.create({ name, email, role: 'approver', hashedPassword: hashed })
+  return UserRepository.create({ name, email, role: 'consultant', hashedPassword: hashed })
 }
 
 export async function login(email: string, password: string) {
