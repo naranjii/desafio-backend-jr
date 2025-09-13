@@ -13,10 +13,11 @@ router.get("/", RequestController.list);
 router.get("/:id", RequestController.getById);
 
 router.post("/", validationMiddleware(createRequestDto), RequestController.create);
-router.post("/:id/submit", validationMiddleware(updateRequestDto), RequestController.submit)
+router.patch("/:id", validationMiddleware(updateRequestDto), RequestController.update);
+
 // approver role routes:
 
-router.patch("/:id", roleMiddleware, RequestController.update);
+router.post("/:id/submit", RequestController.submit)
 router.post("/:id/approve", roleMiddleware, RequestController.approve);
 router.post("/:id/reject", roleMiddleware, RequestController.reject);
 export default router;
