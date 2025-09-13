@@ -14,8 +14,7 @@ export async function createRequest(userId: string, requestItem: RequestItemInte
 }
 
 export async function submitRequest(id: string) {
-  const request = await RequestRepository.getById(id)
-  if (!request) throw new Error('Not Found')
+  const request = await getRequestById(id)
 
   if (request.status !== ApprovalStatus.draft) throw new Error('Request must be a draft to be submitted.')
 
@@ -28,16 +27,23 @@ export async function update(id: string, items: RequestItemInterface[]) {
 }
 
 export async function approveRequest(id: string) {
+  const request = await getRequestById(id)
+  if (request.status !== ApprovalStatus.submitted) throw new Error('Request must be a draft to be submitted.')
   return RequestRepository.approve(id);
 }
 export async function rejectRequest(id: string) {
+  const request = await getRequestById(id)
+  if (request.status !== ApprovalStatus.submitted) throw new Error('Request must be a draft to be submitted.')
   return RequestRepository.reject(id);
 }
 export async function getAllRequests() {
   return RequestRepository.getAll();
 }
+
 export async function getRequestById(id: string) {
-  return RequestRepository.getById(id);
+  const request = await RequestRepository.getById(id)
+  if (!request) throw new Error('Not Found')
+  return request
 }
 
 // Admin Services?
