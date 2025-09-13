@@ -1,5 +1,5 @@
 export interface RequestItemInterface {
-  name: string;
-  quantity: number;
-  price: number;
+	name: string;
+	quantity: number;
+	price: number;
 }

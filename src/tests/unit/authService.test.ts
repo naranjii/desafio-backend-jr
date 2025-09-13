@@ -7,108 +7,121 @@ import { prisma } from "../../config/db";
 
 jest.mock("../../repositories/UserRepository");
 jest.mock("bcryptjs", () => ({
-    hash: jest.fn(),
-    compare: jest.fn(),
+	hash: jest.fn(),
+	compare: jest.fn(),
 }));
 
 describe("AuthService", () => {
-    beforeEach(async () => {
-        await clearDB();
-    });
+	beforeEach(async () => {
+		await clearDB();
+	});
 
-    afterAll(async () => {
-        await clearDB();
-        await prisma.$disconnect();
-    });
+	afterAll(async () => {
+		await clearDB();
+		await prisma.$disconnect();
+	});
 
-    afterAll(() => {
-        jest.clearAllMocks();
-        jest.restoreAllMocks();
-    });
+	afterAll(() => {
+		jest.clearAllMocks();
+		jest.restoreAllMocks();
+	});
 
-    describe("register", () => {
-        it("hashes password and creates user", async () => {
+	describe("register", () => {
+		it("hashes password and creates user", async () => {
+			(bcrypt.hash as jest.Mock).mockResolvedValue("hashed-pass");
 
-            (bcrypt.hash as jest.Mock).mockResolvedValue("hashed-pass");
+			const repositoryMock = jest
+				.spyOn(UserRepository, "create")
+				.mockResolvedValue({
+					id: "uuid-123",
+					name: "Mat",
+					email: "mat@test.com",
+					role: "consultant",
+				});
 
-            const repositoryMock = jest
-                .spyOn(UserRepository, "create")
-                .mockResolvedValue({
-                    id: "uuid-123",
-                    name: "Mat",
-                    email: "mat@test.com",
-                    role: "consultant",
-                });
+			const user = await AuthService.register({
+				email: "mat@test.com",
+				name: "Mat",
+				password: "pass123",
+			});
 
-            const user = await AuthService.register({ email: "mat@test.com", name: 'Mat', password: "pass123" });
+			expect(bcrypt.hash).toHaveBeenCalledWith("pass123", 10);
 
-            expect(bcrypt.hash).toHaveBeenCalledWith("pass123", 10);
+			expect(repositoryMock).toHaveBeenCalledWith({
+				name: "Mat",
+				email: "mat@test.com",
+				role: "consultant",
+				hashedPassword: "hashed-pass",
+			});
 
-            expect(repositoryMock).toHaveBeenCalledWith({
-                name: "Mat",
-                email: "mat@test.com",
-                role: "consultant",
-                hashedPassword: "hashed-pass",
-            });
+			expect(user).toEqual({
+				id: "uuid-123",
+				name: "Mat",
+				email: "mat@test.com",
+				role: "consultant",
+			});
+		});
 
-            expect(user).toEqual({
-                id: "uuid-123",
-                name: "Mat",
-                email: "mat@test.com",
-                role: "consultant",
-            });
-        });
+		it("throws if email already in use", async () => {
+			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+				id: "uuid-123",
+				email: "mat@test.com",
+				password: "hashed-pass",
+				name: "Mat",
+				role: "consultant",
+			});
 
-        it("throws if email already in use", async () => {
-            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
-                id: "uuid-123",
-                email: "mat@test.com",
-                password: "hashed-pass",
-                name: "Mat",
-                role: "consultant",
-            });
+			await expect(
+				AuthService.register({
+					email: "mat@test.com",
+					name: "Mat",
+					password: "pass123",
+				}),
+			).rejects.toThrow("Email already in use");
+		});
+	});
 
-            await expect(AuthService.register({ email: "mat@test.com", name: 'Mat', password: "pass123" })).rejects.toThrow("Email already in use");
-        });
-    });
+	describe("login", () => {
+		it("returns JWT when password matches", async () => {
+			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+				id: "uuid-123",
+				email: "mat@test.com",
+				password: "hashed",
+				role: "consultant",
+				name: "Supla",
+			});
 
-    describe("login", () => {
-        it("returns JWT when password matches", async () => {
-            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
-                id: "uuid-123",
-                email: "mat@test.com",
-                password: "hashed",
-                role: "consultant",
-                name: "Supla",
-            });
+			(bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
-            (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+			const token = await AuthService.login("mat@test.com", "pass123");
+			expect(bcrypt.compare).toHaveBeenCalledWith("pass123", "hashed");
 
-            const token = await AuthService.login("mat@test.com", "pass123")
-            expect(bcrypt.compare).toHaveBeenCalledWith("pass123", "hashed");
+			const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
+			expect((decoded as any).id).toBe("uuid-123");
+		});
 
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
-            expect((decoded as any).id).toBe("uuid-123");
-        });
+		it("throws if user not found", async () => {
+			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue(null);
 
-        it("throws if user not found", async () => {
-            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue(null);
+			await expect(
+				AuthService.login("mat@test.com", "pass123"),
+			).rejects.toThrow("User not found");
+		});
 
-            await expect(AuthService.login("mat@test.com", "pass123")).rejects.toThrow("User not found");
-        });
+		it("throws if password does not match", async () => {
+			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+				id: "uuid-123",
+				email: "mat@test.com",
+				password: "hashed",
+				role: "consultant",
+				name: "Supla",
+			});
 
-        it("throws if password does not match", async () => {
-            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
-                id: "uuid-123",
-                email: "mat@test.com",
-                password: "hashed",
-                role: "consultant",
-                name: "Supla",
-            });
+			(bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-            (bcrypt.compare as jest.Mock).mockResolvedValue(false);
-
-            await expect(AuthService.login("mat@test.com", "pass123")).rejects.toThrow("Invalid email or password");
-        });
-    });
+			await expect(
+				AuthService.login("mat@test.com", "pass123"),
+			).rejects.toThrow("Invalid email or password");
+		});
+	});
 });

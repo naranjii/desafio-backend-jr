@@ -12,10 +12,18 @@ router.use(authMiddleware);
 router.get("/", RequestController.list);
 router.get("/:id", RequestController.getById);
 
-router.post("/", validationMiddleware(createRequestDto), RequestController.create);
-router.patch("/:id", validationMiddleware(updateRequestDto), RequestController.update);
+router.post(
+	"/",
+	validationMiddleware(createRequestDto),
+	RequestController.create,
+);
+router.patch(
+	"/:id",
+	validationMiddleware(updateRequestDto),
+	RequestController.update,
+);
 
-router.post("/:id/submit", RequestController.submit)
+router.post("/:id/submit", RequestController.submit);
 router.post("/:id/approve", roleMiddleware, RequestController.approve);
 router.post("/:id/reject", roleMiddleware, RequestController.reject);
 export default router;
