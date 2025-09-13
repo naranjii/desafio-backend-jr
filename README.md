@@ -1,73 +1,42 @@
-<h1> 'desafio-backend-jr': MatheusLaranjeira@Suplos</h1>
-<h2>Descrição do desafio :</h2>
-<p>'MVP de sistema de gestão de requisições de compra, que permite a usuários cadastrar requisições, adicionar itens e acompanhar o status até aprovação ou rejeição.'</p>
-<h2>Feature stack:</h2>
+<h1>MVP API - Gestor de Requisições de Compras</h1>
 
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
+[![JWT](https://img.shields.io/badge/JWT-orange?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
+[![Zod](https://img.shields.io/badge/Zod-3.x-3068B7?style=for-the-badge&logo=Zod&logoColor=white)](https://zod.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)](https://vitest.dev/)
+<img width="925" height="593" alt="image" src="https://github.com/user-attachments/assets/d25bb39c-026d-4f29-9dca-ec16ee94f504" />
 
----
-<h4>Árvore de diretórios:</h4>
-```directory tree
-desafio-backend-jr/
-│  .env
-│  package.json
-│  tsconfig.json
-│  README.md
-├─ .devcontainer/
-│  ├─ devcontainer.json
-│  ├─ docker-compose.yml
-│  └─ Dockerfile
-└─ src/
-   ├─ app.ts                    —→ Express, global middleware
-   ├─ server.ts
-   │
-   ├─ config/                   —→ DB/MySQL JWT
-   │   └─ db.ts
-   │
-   ├─ models/                   —→ Entidades/esquemas
-   │   ├─ User.ts
-   │   ├─ PurchaseRequest.ts
-   │   ├─ RequestItem.ts
-   │   └─ ApprovalHistory.ts
-   │
-   ├─ controllers/              —→ Handlers de requisições e respostas
-   │   ├─ AuthController.ts
-   │   ├─ RequestController.ts
-   │   └─ ReportController.ts
-   │
-   ├─ services/                 —→ Privilégios ou "Regras de negócio", serviços de autenticação
-   │   ├─ AuthService.ts
-   │   ├─ RequestService.ts
-   │   └─ ReportService.ts
-   │
-   ├─ routes/                   —→ Rotas ~ Endpoints
-   │   ├─ authRoutes.ts
-   │   ├─ requestRoutes.ts
-   │   └─ reportRoutes.ts
-   │
-   ├─ middlewares/               —→ autenticação, roles, etc.
-   │   ├─ authMiddleware.ts
-   │   └─ roleMiddleware.ts
-   │
-   ├─ utils/                     —→ Componentização para hash, logger...
-   │   ├─ password.ts
-   │   └─ logger.ts
-   │
-   └─ tests/                     —→ Testes unitários...
-       ├─ auth.test.ts
-       └─ request.test.ts
-```
+API desenvolvida como candidata à solução ao "Desafio Backend Junior", etapa do processo seletivo para vaga homônima em empresa do segmento Construtech.
 
-Uso de inteligências artificiais:
-Lorem Ipsum copilot usado na documentação, configurações iniciais (.devcontainer/ prisma placeholders), trechos de jest em src/tests/ e debugging.
+<h2>Árvore de Diretórios 📂</h2>
+<h2>Configuração ⚙️</h2>
 
-
----
-
-Dependências localizadas em ```package.json```
 ```bash
-pnpm install
-pnpm prisma generate
+git clone https://github.com/naranjii/desafio-backend-jr
+cd desafio-backend-jr
+cp .env.example .env
+# edite as variáveis DATABASE_URL, JWT_SECRET, PORT
+pnpm i
 pnpm prisma migrate dev
+pnpm prisma generate
 pnpm test
 pnpm dev
+
 ```
+
+<h2>Features ✨</h2>
+<ul>
+  <li>Autenticação com <strong>JWT</strong></li>
+  <li>Controle de acesso por <strong>roles</strong> (<code>consultant</code>, <code>approver</code>)</li>
+  <li>CRUD de requisições de compra</li>
+  <li>Submissão e aprovação de pedidos</li>
+  <li>Validação de dados com <strong>Zod</strong></li>
+  <li>Documentação <strong>Swagger/OpenAPI</strong> em <code>/docs</code></li>
+  <li>Logger customizado com <em>error serializer</em> e <strong>chalk</strong></li>
+</ul>
+<h2>Testes 🧪</h2>
+
