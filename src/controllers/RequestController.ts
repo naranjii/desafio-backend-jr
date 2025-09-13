@@ -19,14 +19,15 @@ export async function getById(req: Request, res: Response) {
   res.json(request);
 }
 
-// para ambos abaixo falta limitar os pedidos a 'draft's e de submit para approve e reject
-
-export async function update(req: Request, res: Response) {
+export async function edit(req: Request, res: Response) {
   const id = req.params.id;
-  const data = req.body;
-  const updated = await RequestService.updateRequest(id, data);
+  const status = req.params.status;
+  const items = req.params.items;
+  const updated = await RequestService.updateRequest({id, status, items});
   res.json(updated);
 }
+
+// para ambos abaixo falta limitar os pedidos a 'draft's e de submit para approve e reject
 
 export async function submit(req: Request, res: Response) {
   const id = req.params.id;

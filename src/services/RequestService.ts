@@ -4,9 +4,11 @@ import { RequestRepository } from "../repositories/RequestRepository";
 export async function createRequest(userId: string, requestItem: RequestItemInterface[]) {
   return RequestRepository.create({ userId, requestItem });
 }
-export async function updateRequest(id: string, requestItem: RequestItemInterface) {
-  return RequestRepository.update({ id, requestItem });
+
+export async function updateRequest(id: string, status: string, items: RequestItemInterface[]) {
+  return RequestRepository.update({ id, status, items });
 }
+
 export async function submitRequest(id: string) {
   return RequestRepository.submit(id);
 }
