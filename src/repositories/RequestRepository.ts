@@ -41,5 +41,12 @@ export const RequestRepository = {
             where: { id },
             data: { status: ApprovalStatus.approved }
         });
+    },
+    async update({ id, status, items }: { id: string, status: string, items: RequestItemInterface[] }) {
+        return prisma.purchaseRequest.update({
+            where: { id },
+            data: { status, items: { deleteMany: {}, createMany: { data: items } } },
+            include: { items: true },
+        });
     }
 }

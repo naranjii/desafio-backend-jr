@@ -20,10 +20,8 @@ export async function getById(req: Request, res: Response) {
 }
 
 export async function edit(req: Request, res: Response) {
-  const id = req.params.id;
-  const status = req.params.status;
-  const items = req.params.items;
-  const updated = await RequestService.updateRequest({id, status, items});
+  const data = req.body;
+  const updated = await RequestService.updateRequest(data.id, data.status, data.items);
   res.json(updated);
 }
 
