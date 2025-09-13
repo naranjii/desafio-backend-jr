@@ -12,7 +12,7 @@ export async function create(req: Request, res: Response) {
   }
 }
 
-export async function list(req: Request, res: Response) {
+export async function list(_: Request, res: Response) {
   try {
     const requests = await RequestService.getAllRequests();
     res.json(requests);
