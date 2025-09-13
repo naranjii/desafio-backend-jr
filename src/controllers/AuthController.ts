@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import * as AuthService from "../services/AuthService";
+import { TypedRequest } from "../interfaces/TypedRequest";
+import { LoginDto, RegisterDto } from "../dtos/auth.dto";
 
-export async function register(req: Request, res: Response) {
-  const { name, email, password, role } = req.body;
+export async function register(req: TypedRequest<RegisterDto>, res: Response) {
+  const { name, email, password } = req.body;
   try {
-    const user = await AuthService.register(name, email, password, role);
+    const user = await AuthService.register({ name, email, password });
     res.status(201).json(user);
   } catch (err: any) {
     console.error('Register error:', err);
@@ -12,7 +14,7 @@ export async function register(req: Request, res: Response) {
   }
 }
 
-export async function login(req: Request, res: Response) {
+export async function login(req: TypedRequest<LoginDto>, res: Response) {
   const { email, password } = req.body;
   try {
     const token = await AuthService.login(email, password);
