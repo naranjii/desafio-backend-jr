@@ -25,7 +25,6 @@ pnpm prisma migrate dev
 pnpm prisma generate
 pnpm test
 pnpm dev
-
 ```
 
 <h2>Features ✨</h2>
@@ -37,6 +36,17 @@ pnpm dev
   <li>Validação de dados com <strong>Zod</strong></li>
   <li>Documentação <strong>Swagger/OpenAPI</strong> em <code>/docs</code></li>
   <li>Logger customizado com <em>error serializer</em> e <strong>chalk</strong></li>
+  <li>Testes unitários e de integração com <strong>Vitest</strong></li>
 </ul>
 <h2>Testes 🧪</h2>
+<p>O repositório contém pelo menos seis testes, sendo três unitários para as funções em services/ e três integrativos para as rotas, todos construídos com vitest. O ambiente de testes pode ser iniciado com o comando:</p>
 
+
+```bash
+pnpm test
+```
+
+<h2>Sobre o uso de IA:</h2>
+<p>configs, tests, docs generated disclaimer lorem</p>
+<h2>Notas e Observações:</h2>
+<p>Experiência lorem</p>
