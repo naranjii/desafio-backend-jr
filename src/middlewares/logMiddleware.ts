@@ -1,6 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
 import chalk from 'chalk';
-
+import type { NextFunction, Request, Response } from 'express';
 const routesMap = {
     POST: 'blue',
     GET: 'green',
