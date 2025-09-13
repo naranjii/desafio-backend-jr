@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as RequestController from "../controllers/RequestController";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { roleMiddleware } from "../middlewares/roleMiddleware";
-import { RequestRepository } from "../repositories/RequestRepository";
+
 const router = Router();
 
 router.use(authMiddleware);

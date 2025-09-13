@@ -14,7 +14,6 @@ export function errorHandler(error: unknown, res: Response) {
     if (!(error instanceof ApplicationError))
         return res.status(500).json(error)
 
-    return res.status(errorSerializer[error.code]).json(error)
+    res.status(errorSerializer[error.code]).json(error)
 }
-
 
