@@ -1,19 +1,21 @@
 import { Request, Response } from "express";
 import * as RequestService from "../services/RequestService";
 import { errorHandler } from "../errors/_handler";
+import { AuthenticatedTypedRequest, TypedRequest } from "../interfaces/TypedRequest";
+import { CreateRequestDto, UpdateRequestDto } from "../dtos/request.dto";
+import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 
-export async function create(req: Request, res: Response) {
+export async function create(req: AuthenticatedTypedRequest<CreateRequestDto>, res: Response) {
   try {
-    const userId = (req as any).user.id;
     const data = req.body;
-    const request = await RequestService.createRequest(userId, data);
+    const request = await RequestService.createRequest(req.user.id, data.items);
     res.status(201).json(request);
   } catch (error) {
     return errorHandler(error, res)
   }
 }
 
-export async function list(_: Request, res: Response) {
+export async function list(_: AuthenticatedRequest, res: Response) {
   try {
     const requests = await RequestService.getAllRequests();
     res.json(requests);
@@ -22,7 +24,7 @@ export async function list(_: Request, res: Response) {
   }
 }
 
-export async function getById(req: Request, res: Response) {
+export async function getById(req: AuthenticatedRequest, res: Response) {
   try {
     const id = req.params.id;
     const request = await RequestService.getRequestById(id);
@@ -32,11 +34,9 @@ export async function getById(req: Request, res: Response) {
   }
 }
 
-export async function update(req: Request, res: Response) {
+export async function update(req: AuthenticatedTypedRequest<UpdateRequestDto>, res: Response) {
   try {
-    const data = req.body;
-    const id = req.params.id;
-    const items = data.items;
+    const { id, items } = req.body;
     const request = await RequestService.update(id, items);
     res.json(request);
   } catch (error) {
@@ -44,7 +44,7 @@ export async function update(req: Request, res: Response) {
   }
 }
 
-export async function submit(req: Request, res: Response) {
+export async function submit(req: AuthenticatedRequest, res: Response) {
   try {
     const id = req.params.id;
     const submitted = await RequestService.submitRequest(id);
@@ -54,7 +54,7 @@ export async function submit(req: Request, res: Response) {
   }
 }
 
-export async function approve(req: Request, res: Response) {
+export async function approve(req: AuthenticatedRequest, res: Response) {
   try {
     const id = req.params.id;
     const approved = await RequestService.approveRequest(id);
@@ -64,7 +64,7 @@ export async function approve(req: Request, res: Response) {
   }
 }
 
-export async function reject(req: Request, res: Response) {
+export async function reject(req: AuthenticatedRequest, res: Response) {
   try {
     const id = req.params.id;
     const rejected = await RequestService.rejectRequest(id);
