@@ -85,17 +85,30 @@ describe("AuthService", () => {
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
             const token = await AuthService.login("mat@test.com", "pass123")
-            if (!token) {
-                console.log("Token JWT ausente. Login falhou.")
-            } else {
-                console.log(`Token JWT retornado. Login sucedido. (JWT=${token.toString().slice(0, 20)}...)`)
-            };
-
             expect(bcrypt.compare).toHaveBeenCalledWith("pass123", "hashed");
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
             expect((decoded as any).id).toBe("uuid-123");
         });
 
+        it("throws if user not found", async () => {
+            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue(null);
+
+            await expect(AuthService.login("mat@test.com", "pass123")).rejects.toThrow("User not found");
+        });
+
+        it("throws if password does not match", async () => {
+            jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+                id: "uuid-123",
+                email: "mat@test.com",
+                password: "hashed",
+                role: "consultant",
+                name: "Supla",
+            });
+
+            (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+            await expect(AuthService.login("mat@test.com", "pass123")).rejects.toThrow("Invalid email or password");
+        });
     });
 });

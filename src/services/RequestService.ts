@@ -25,7 +25,14 @@ export async function submitRequest(id: string, userId: string) {
 
 export async function update(id: string, items: RequestItemInterface[]) {
   if (!items.length) throw new InvalidPayloadError("Items array cannot be empty");
-  return RequestRepository.patchItems({ id, requestItems: items });
+  const request = await getRequestById(id)
+
+  if (!request) throw new NotFoundError('Not Found')
+
+  if (request.status !== ApprovalStatus.draft) throw new InvalidPayloadError('Only draft requests can be updated.')
+
+  // Non-null assertion por conta do check realizado acima
+  return (await RequestRepository.patchItems({ id, requestItems: items }))!;
 }
 
 export async function approveRequest(id: string, userId: string) {

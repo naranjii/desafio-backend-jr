@@ -2,6 +2,7 @@ import { prisma } from "../config/db";
 import { ApprovalStatus, } from "../generated/prisma";
 import { RequestItemInterface, } from "../interfaces/RequestItemInterface";
 import { CreateRequestInterface, SubmitRequestInterface, UpdateRequestInterface, UpdateStatusInterface } from "../interfaces/RequestInterface";
+import { NotFoundError } from "../errors/notFound.error";
 
 
 export const RequestRepository = {
@@ -77,11 +78,11 @@ export const RequestRepository = {
 
     async patchItems({ id, requestItems }: UpdateRequestInterface) {
         return prisma.$transaction(async (tx) => {
-            tx.requestItem.deleteMany({ where: { requestId: id } });
-            tx.requestItem.createMany({
+            await tx.requestItem.deleteMany({ where: { requestId: id } });
+            await tx.requestItem.createMany({
                 data: requestItems.map(item => ({ ...item, requestId: id }))
             });
-            return tx.purchaseRequest.findUnique({ where: { id }, include: { items: true } });
+            return tx.purchaseRequest.findUnique({ where: { id }, include: { items: true } })
         })
     }
 }
