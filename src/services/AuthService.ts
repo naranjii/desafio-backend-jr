@@ -1,7 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserRepository } from "../repositories/UserRepository";
-import { UserRole } from "../generated/prisma";
 import { RegisterDto } from "../dtos/auth.dto";
 import { ConflictError } from "../errors/conflict.error";
 import { NotFoundError } from "../errors/notFound.error";

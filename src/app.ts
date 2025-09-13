@@ -4,8 +4,6 @@ import requestRoutes from "./routes/requestRoutes";
 import reportRoutes from "./routes/reportRoutes";
 import swaggerUi from "swagger-ui-express";
 import { openApiDoc } from "./openapi/_config";
-import { createDocument } from "zod-openapi";
-import z from "zod";
 
 const app = express();
 app.use(express.json());

@@ -19,9 +19,6 @@ describe("AuthService", () => {
 	afterAll(async () => {
 		await clearDB();
 		await prisma.$disconnect();
-	});
-
-	afterAll(() => {
 		jest.clearAllMocks();
 		jest.restoreAllMocks();
 	});

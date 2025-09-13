@@ -1,5 +1,5 @@
-import { Request } from "express";
-import { AuthTokenInterface } from "./AuthTokenInterface";
+import type { Request } from "express";
+import type{ AuthTokenInterface } from "./AuthTokenInterface";
 
 export interface TypedRequest<T> extends Request {
 	body: T;

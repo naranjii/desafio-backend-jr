@@ -1,5 +1,4 @@
 import { createDocument } from "zod-openapi";
-import { loginDto, registerDto } from "../dtos/auth.dto";
 import { createRequestDto, updateRequestDto } from "../dtos/request.dto";
 import z from "zod";
 

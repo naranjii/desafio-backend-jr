@@ -1,6 +1,5 @@
 import { prisma } from "../config/db";
-import { PrismaClient, UserRole } from "../generated/prisma";
-import { CreateUserInterface } from "../interfaces/UserInterface";
+import type { CreateUserInterface } from "../interfaces/UserInterface";
 
 export const UserRepository = {
 	async create({ name, email, role, hashedPassword }: CreateUserInterface) {

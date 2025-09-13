@@ -1,5 +1,5 @@
-import { ApprovalStatus } from "../generated/prisma";
-import { RequestItemInterface } from "./RequestItemInterface";
+import type { ApprovalStatus } from "../generated/prisma";
+import type { RequestItemInterface } from "./RequestItemInterface";
 
 export interface CreateRequestInterface {
 	userId: string;

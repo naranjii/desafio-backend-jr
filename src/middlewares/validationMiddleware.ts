@@ -1,5 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import { z, ZodError } from "zod";
+import type { NextFunction, Request, Response } from "express";
+import { ZodError, type z } from "zod";
+
 
 export function validationMiddleware(schema: z.ZodObject<any, any>) {
 	return (req: Request, res: Response, next: NextFunction) => {

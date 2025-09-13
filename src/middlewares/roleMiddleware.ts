@@ -1,6 +1,6 @@
-import { Response, NextFunction } from "express";
-import { AuthenticatedRequest } from "./authMiddleware";
+import type { NextFunction, Response } from "express";
 import { UserRole } from "../generated/prisma";
+import type { AuthenticatedRequest } from "./authMiddleware";
 
 export function roleMiddleware(role: UserRole = UserRole.approver) {
 	return (req: AuthenticatedRequest, res: Response, next: NextFunction) => {

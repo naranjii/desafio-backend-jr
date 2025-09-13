@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response, } from "express";
 import jwt from "jsonwebtoken";
-import { AuthTokenInterface } from "../interfaces/AuthTokenInterface";
+import type { AuthTokenInterface } from "../interfaces/AuthTokenInterface";
 
 export interface AuthenticatedRequest extends Request {
 	user: AuthTokenInterface;
@@ -11,7 +11,7 @@ export function authMiddleware(
 	res: Response,
 	next: NextFunction,
 ) {
-	const header = req.headers["authorization"];
+	const header = req.headers.authorization;
 	if (!header) return res.status(401).json({ error: "Token ausente" });
 
 	const token = header.split(" ")[1];
