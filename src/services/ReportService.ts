@@ -1,5 +1,5 @@
 import { RequestRepository } from "../repositories/RequestRepository";
 
 export async function getSummary() {
-  return RequestRepository.getByStatus();
+  return RequestRepository.getGroupedListByStatus();
 }
