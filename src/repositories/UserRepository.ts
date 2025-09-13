@@ -5,7 +5,8 @@ import { CreateUserInterface } from "../interfaces/UserInterface";
 export const UserRepository = {
     async create({ name, email, role, hashedPassword }: CreateUserInterface) {
         return prisma.user.create({
-            data: { name, email, role, password: hashedPassword }
+            data: { name, email, role, password: hashedPassword },
+            omit: { password: true }
         });
     },
 
