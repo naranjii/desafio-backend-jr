@@ -1,3 +1,4 @@
+import { ApprovalStatus } from "../generated/prisma";
 import { RequestItemInterface } from "../interfaces/RequestItemInterface";
 import { RequestRepository } from "../repositories/RequestRepository";
 
@@ -13,12 +14,11 @@ export async function createRequest(userId: string, requestItem: RequestItemInte
 }
 
 export async function submitRequest(id: string) {
-  if (!id) {
-    throw new Error("Error submitting request: Request ID is required to submit a request");
-  }
-  if (typeof id !== 'string' || id.trim() === '') {
-    throw new Error("Error submitting request: Invalid Request ID");
-  }
+  const request = await RequestRepository.getById(id)
+  if (!request) throw new Error('Not Found')
+
+  if (request.status !== ApprovalStatus.draft) throw new Error('Request must be a draft to be submitted.')
+
   return RequestRepository.submit(id);
 }
 
