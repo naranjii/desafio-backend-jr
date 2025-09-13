@@ -15,8 +15,6 @@ router.get("/:id", RequestController.getById);
 router.post("/", validationMiddleware(createRequestDto), RequestController.create);
 router.patch("/:id", validationMiddleware(updateRequestDto), RequestController.update);
 
-// approver role routes:
-
 router.post("/:id/submit", RequestController.submit)
 router.post("/:id/approve", roleMiddleware, RequestController.approve);
 router.post("/:id/reject", roleMiddleware, RequestController.reject);

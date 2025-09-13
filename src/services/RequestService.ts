@@ -4,7 +4,6 @@ import { ApprovalStatus } from "../generated/prisma";
 import { RequestItemInterface } from "../interfaces/RequestItemInterface";
 import { RequestRepository } from "../repositories/RequestRepository";
 
-// Consultant role Services:
 export async function createRequest(userId: string, requestItems: RequestItemInterface[]) {
   if (!requestItems || requestItems.length === 0) {
     throw new InvalidPayloadError("Error creating request: Request must contain at least one item");
@@ -54,8 +53,3 @@ export async function getRequestById(id: string) {
   if (!request) throw new NotFoundError('Not Found')
   return request
 }
-
-// Admin Services?
-//export async function updateRequest(id: string, status: string, items: RequestItemInterface[]) {
-//  return RequestRepository.update({ id, status, items });
-// }
