@@ -24,7 +24,7 @@ export const RequestRepository = {
     async getById(id: string) {
         return prisma.purchaseRequest.findUnique({ where: { id } })
     },
-    async getByStatus() {
+    async getGroupedListByStatus() {
         return prisma.purchaseRequest.groupBy({
             by: ["status"],
             _count: { status: true }
