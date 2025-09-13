@@ -1,6 +1,8 @@
+import { Router } from "express";
 import * as ReportController from "../controllers/ReportController";
 import { authMiddleware } from "../middlewares/authMiddleware";
-import { router } from "../router";
+
+const router = Router()
 
 router.use(authMiddleware);
 

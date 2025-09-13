@@ -1,7 +1,9 @@
+import { Router } from "express";
 import * as RequestController from "../controllers/RequestController";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { roleMiddleware } from "../middlewares/roleMiddleware";
-import { router } from "../router";
+
+const router = Router()
 
 router.use(authMiddleware);
 
