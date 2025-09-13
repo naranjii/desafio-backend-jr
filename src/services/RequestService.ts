@@ -22,23 +22,11 @@ export async function submitRequest(id: string) {
   return RequestRepository.submit(id);
 }
 
-export async function consultantUpdateRequest(id: string, status: string, items: RequestItemInterface[]) {
-  if (!items || items.length === 0) {
-    throw new Error("Items array cannot be empty");
-  }
-  if (status !== "draft") {
-    throw new Error("Status must be 'draft' for consultant updates");
-  }
-  return RequestRepository.itemPatch({ id, items });
+export async function update(id: string, items: RequestItemInterface[]) {
+  if (!items.length) throw new Error("Items array cannot be empty");
+  return RequestRepository.patchItems({ id, items });
 }
 
-// Approver role Services:
-export async function approverUpdateRequest(id: string, status: string, items: RequestItemInterface[]) {
-  if (!items || items.length === 0) {
-    throw new Error("Items array cannot be empty");
-  }
-  return RequestRepository.freePatch({ id, status, items });
-}
 export async function approveRequest(id: string) {
   return RequestRepository.approve(id);
 }

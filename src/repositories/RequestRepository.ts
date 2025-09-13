@@ -1,6 +1,6 @@
 import { prisma } from "../config/db";
 import { ApprovalStatus, } from "../generated/prisma";
-import { RequestItemInterface } from "../interfaces/RequestItemInterface";
+import { RequestItemInterface, } from "../interfaces/RequestItemInterface";
 
 
 export const RequestRepository = {
@@ -42,19 +42,14 @@ export const RequestRepository = {
             data: { status: ApprovalStatus.approved }
         });
     },
-    // Sobrescreve o items do Purchase Request e depois(?) sincroniza a table RequestItem ou a tabela deve ser chamada explicitamente?
-    async freePatch({ id, status, items }: { id: string, status: string, items: RequestItemInterface[] }) {
-        return prisma.purchaseRequest.update({
-            where: { id },
-            data: { status, items: { deleteMany: {}, createMany: { data: items } } },
-            include: { items: true },
-        });
-    },
-    async itemPatch({ id, items }: { id: string, items: RequestItemInterface[] }) {
-        return prisma.purchaseRequest.update({
-            where: { id },
-            data: { items: { deleteMany: {}, createMany: { data: items } } },
-            include: { items: true },
-        });
+
+    async patchItems({ id, items }: { id: string, items: RequestItemInterface[] }) {
+        return prisma.$transaction(async (tx) => {
+            tx.requestItem.deleteMany({ where: { requestId: id } });
+            tx.requestItem.createMany({
+                data: items.map(item => ({ ...item, requestId: id }))
+            });
+            return tx.purchaseRequest.findUnique({ where: { id }, include: { items: true } });
+        })
     }
 }

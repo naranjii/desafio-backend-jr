@@ -20,17 +20,12 @@ export async function getById(req: Request, res: Response) {
   res.json(request);
 }
 
-export async function edit(req: Request, res: Response) {
+export async function update(req: Request, res: Response) {
   const data = req.body;
   const id = req.params.id;
-  const status = data.status;
   const items = data.items;
-  let updated;
-  if (data.user.role === 'consultant') {
-    updated = await RequestService.consultantUpdateRequest(id, status, items);
-  } else if (data.user.role === 'approver') {
-    updated = await RequestService.approverUpdateRequest(id, status, items);}
-  res.json(updated);
+  const request = await RequestService.update(id, items);
+  res.json(request);
 }
 
 export async function submit(req: Request, res: Response) {
