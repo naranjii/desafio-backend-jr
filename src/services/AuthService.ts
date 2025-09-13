@@ -4,6 +4,8 @@ import { UserRepository } from "../repositories/UserRepository";
 import { UserRole } from "../generated/prisma";
 
 export async function register(name: string, email: string, password: string, role: UserRole) {
+  const user = await UserRepository.findByEmail(email)
+  if (user) throw new Error('Email already in use')
   const hashed = await bcrypt.hash(password, 10);
   return UserRepository.create({ name, email, role, hashedPassword: hashed })
 }
