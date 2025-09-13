@@ -9,12 +9,13 @@ datasource db {
 }
 
 model User {
-  id       String            @id @default(uuid())
-  name     String
-  email    String            @unique
-  password String
-  role     UserRole          @default(consultant)
-  requests PurchaseRequest[]
+  id              String            @id @default(uuid())
+  name            String
+  email           String            @unique
+  password        String
+  role            UserRole          @default(consultant)
+  requests        PurchaseRequest[]
+  ApprovalHistory ApprovalHistory[]
 }
 
 model PurchaseRequest {
@@ -38,13 +39,14 @@ model RequestItem {
 }
 
 model ApprovalHistory {
-  id         String          @id @default(uuid())
-  fromStatus ApprovalStatus
-  toStatus   ApprovalStatus
-  changedAt  DateTime        @default(now())
-  approvedBy Int
-  requestId  String
-  request    PurchaseRequest @relation(fields: [requestId], references: [id])
+  id            String          @id @default(uuid())
+  fromStatus    ApprovalStatus?
+  toStatus      ApprovalStatus
+  changedAt     DateTime        @default(now())
+  performedById String?
+  performedBy   User?           @relation(fields: [performedById], references: [id])
+  requestId     String
+  request       PurchaseRequest @relation(fields: [requestId], references: [id])
 }
 
 enum ApprovalStatus {

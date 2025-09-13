@@ -24,7 +24,7 @@ describe('RequestRepository (unit)', () => {
         jest.spyOn((prisma as any).purchaseRequest, 'create').mockResolvedValueOnce(createdObj);
         jest.spyOn((prisma as any).purchaseRequest, 'findUnique').mockResolvedValueOnce(createdObj);
 
-        const created = await RequestRepository.create({ userId: user.id, requestItem: [{ name: 'Item', quantity: 1, price: 1 }] });
+        const created = await RequestRepository.create({ userId: user.id, requestItems: [{ name: 'Item', quantity: 1, price: 1 }] });
         expect(created).toHaveProperty('id', 'custom-id-1');
 
         const found = await RequestRepository.getById(created.id);
@@ -39,7 +39,7 @@ describe('RequestRepository (unit)', () => {
         jest.spyOn((prisma as any).purchaseRequest, 'create').mockResolvedValueOnce(createdObj);
         jest.spyOn((prisma as any).purchaseRequest, 'findMany').mockResolvedValueOnce([createdObj]); 
 
-        await RequestRepository.create({ userId: user.id, requestItem: [ { name: 'Item2', quantity: 2, price: 2 }] });
+        await RequestRepository.create({ userId: user.id, requestItems: [ { name: 'Item2', quantity: 2, price: 2 }] });
         const all = await RequestRepository.getAll();
         expect(Array.isArray(all)).toBe(true);
         expect(all.length).toBeGreaterThanOrEqual(1);

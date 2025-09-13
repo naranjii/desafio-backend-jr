@@ -47,8 +47,9 @@ export async function update(req: TypedRequest<UpdateRequestDto>, res: Response)
 
 export async function submit(req: Request, res: Response) {
   try {
+    const { user } = req as AuthenticatedRequest;
     const id = req.params.id;
-    const submitted = await RequestService.submitRequest(id);
+    const submitted = await RequestService.submitRequest(id, user.id);
     res.json(submitted);
   } catch (error) {
     return errorHandler(error, res)
@@ -57,8 +58,9 @@ export async function submit(req: Request, res: Response) {
 
 export async function approve(req: Request, res: Response) {
   try {
+    const { user } = req as AuthenticatedRequest;
     const id = req.params.id;
-    const approved = await RequestService.approveRequest(id);
+    const approved = await RequestService.approveRequest(id, user.id);
     res.json(approved);
   } catch (error) {
     return errorHandler(error, res)
@@ -67,8 +69,9 @@ export async function approve(req: Request, res: Response) {
 
 export async function reject(req: Request, res: Response) {
   try {
+    const { user } = req as AuthenticatedRequest;
     const id = req.params.id;
-    const rejected = await RequestService.rejectRequest(id);
+    const rejected = await RequestService.rejectRequest(id, user.id);
     res.json(rejected);
   } catch (error) {
     return errorHandler(error, res)

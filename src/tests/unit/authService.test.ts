@@ -36,7 +36,7 @@ describe("AuthService", () => {
                     password: "hashed-pass",
                 });
 
-            const user = await AuthService.register("Mat", "mat@test.com", "pass123", "consultant");
+            const user = await AuthService.register({ email: "mat@test.com", name: 'Mat', password: "pass123" });
 
             expect(bcrypt.hash).toHaveBeenCalledWith("pass123", 10);
 
