@@ -1,3 +1,4 @@
+import { beforeEach, describe, it, vi } from "vitest";
 import { prisma } from "../../config/db";
 import { RequestRepository } from "../../repositories/RequestRepository";
 import * as ReportService from "../../services/ReportService";
@@ -6,7 +7,7 @@ import { clearDB } from "../helpers";
 describe("ReportService (unit)", () => {
 	beforeEach(async () => {
 		await clearDB();
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	afterAll(async () => {
@@ -15,7 +16,7 @@ describe("ReportService (unit)", () => {
 	});
 
 	it("returns sorted and formatted status counts", async () => {
-		jest.spyOn(RequestRepository, "getGroupedListByStatus").mockResolvedValue([
+		vi.spyOn(RequestRepository, "getGroupedListByStatus").mockResolvedValue([
 			{ status: "approved", _count: { status: 3 } },
 			{ status: "rejected", _count: { status: 5 } },
 		]);
@@ -28,7 +29,7 @@ describe("ReportService (unit)", () => {
 	});
 
 	it("returns empty array if no requests", async () => {
-		jest
+		vi
 			.spyOn(RequestRepository, "getGroupedListByStatus")
 			.mockResolvedValue([]);
 		const summary = await ReportService.getSummary();

@@ -1,6 +1,7 @@
 import { prisma } from "../../config/db";
 import * as RequestService from "../../services/RequestService";
 import { clearDB } from "../helpers";
+import { describe, it, expect, beforeEach, afterAll } from "vitest";
 
 describe("RequestService (unit)", () => {
 	beforeEach(async () => {

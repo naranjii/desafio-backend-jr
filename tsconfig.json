@@ -4,9 +4,10 @@
 		"module": "CommonJS",
 		"esModuleInterop": true,
 		"strict": true,
-		"rootDir": "src",
+		"rootDir": ".",
 		"outDir": "dist",
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
-	}
+	},
+	"include": ["src", "vitest.config.ts"]
 }

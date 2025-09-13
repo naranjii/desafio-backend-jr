@@ -4,11 +4,12 @@ import * as bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { clearDB } from "../helpers";
 import { prisma } from "../../config/db";
+import {  vi } from "vitest";
 
-jest.mock("../../repositories/UserRepository");
-jest.mock("bcryptjs", () => ({
-	hash: jest.fn(),
-	compare: jest.fn(),
+vi.mock("../../repositories/UserRepository");
+vi.mock("bcryptjs", () => ({
+	hash: vi.fn(),
+	compare: vi.fn(),
 }));
 
 describe("AuthService", () => {
@@ -19,15 +20,16 @@ describe("AuthService", () => {
 	afterAll(async () => {
 		await clearDB();
 		await prisma.$disconnect();
-		jest.clearAllMocks();
-		jest.restoreAllMocks();
+		vi.clearAllMocks();
+		vi.restoreAllMocks();
 	});
 
 	describe("register", () => {
 		it("hashes password and creates user", async () => {
-			(bcrypt.hash as jest.Mock).mockResolvedValue("hashed-pass");
+			// biome-ignore lint/suspicious/noExplicitAny: <simple bcrypt mock>
+			(bcrypt.hash as any).mockResolvedValue("hashed-pass");
 
-			const repositoryMock = jest
+			const repositoryMock = vi
 				.spyOn(UserRepository, "create")
 				.mockResolvedValue({
 					id: "uuid-123",
@@ -60,7 +62,7 @@ describe("AuthService", () => {
 		});
 
 		it("throws if email already in use", async () => {
-			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+			vi.spyOn(UserRepository, "findByEmail").mockResolvedValue({
 				id: "uuid-123",
 				email: "mat@test.com",
 				password: "hashed-pass",
@@ -80,7 +82,7 @@ describe("AuthService", () => {
 
 	describe("login", () => {
 		it("returns JWT when password matches", async () => {
-			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+			vi.spyOn(UserRepository, "findByEmail").mockResolvedValue({
 				id: "uuid-123",
 				email: "mat@test.com",
 				password: "hashed",
@@ -88,17 +90,19 @@ describe("AuthService", () => {
 				name: "Supla",
 			});
 
-			(bcrypt.compare as jest.Mock).mockResolvedValue(true);
+			// biome-ignore lint/suspicious/noExplicitAny: <simple bcrypt mock>
+			(bcrypt.compare as any).mockResolvedValue(true);
 
 			const token = await AuthService.login("mat@test.com", "pass123");
 			expect(bcrypt.compare).toHaveBeenCalledWith("pass123", "hashed");
 
 			const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
+			// biome-ignore lint/suspicious/noExplicitAny: <simple bcrypt mock>
 			expect((decoded as any).id).toBe("uuid-123");
 		});
 
 		it("throws if user not found", async () => {
-			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue(null);
+			vi.spyOn(UserRepository, "findByEmail").mockResolvedValue(null);
 
 			await expect(
 				AuthService.login("mat@test.com", "pass123"),
@@ -106,7 +110,7 @@ describe("AuthService", () => {
 		});
 
 		it("throws if password does not match", async () => {
-			jest.spyOn(UserRepository, "findByEmail").mockResolvedValue({
+			vi.spyOn(UserRepository, "findByEmail").mockResolvedValue({
 				id: "uuid-123",
 				email: "mat@test.com",
 				password: "hashed",
@@ -114,7 +118,8 @@ describe("AuthService", () => {
 				name: "Supla",
 			});
 
-			(bcrypt.compare as jest.Mock).mockResolvedValue(false);
+			// biome-ignore lint/suspicious/noExplicitAny: <simple bcrypt mock>
+			(bcrypt.compare as any).mockResolvedValue(false);
 
 			await expect(
 				AuthService.login("mat@test.com", "pass123"),
