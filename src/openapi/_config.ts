@@ -236,7 +236,6 @@ export const openApiDoc = createDocument({
                                 example: {
                                     id: 'request-uuid',
                                     status: 'submitted',
-                                    submittedAt: '2025-09-13T14:00:00Z'
                                 }
                             },
                         },
@@ -266,8 +265,6 @@ export const openApiDoc = createDocument({
                                 example: {
                                     id: 'request-uuid',
                                     status: 'approved',
-                                    approvedAt: '2025-09-13T15:00:00Z',
-                                    approvedBy: 'manager-uuid'
                                 }
                             },
                         },
@@ -297,9 +294,6 @@ export const openApiDoc = createDocument({
                                 example: {
                                     id: 'request-uuid',
                                     status: 'rejected',
-                                    rejectedAt: '2025-09-13T16:00:00Z',
-                                    rejectedBy: 'manager-uuid',
-                                    reason: 'Insufficient budget'
                                 }
                             },
                         },
