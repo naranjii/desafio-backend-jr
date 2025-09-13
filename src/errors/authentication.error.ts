@@ -4,6 +4,6 @@ export class AuthenticationError extends ApplicationError {
     constructor(message: string) {
         super(message);
         this.code = "UNAUTHENTICATED";
-        this.name = "ApplicationError";
+        this.name = "AuthenticationError";
     }
 }

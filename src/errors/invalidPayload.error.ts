@@ -4,6 +4,6 @@ export class InvalidPayloadError extends ApplicationError {
     constructor(message: string) {
         super(message);
         this.code = "INVALID_PAYLOAD";
-        this.name = "ApplicationError";
+        this.name = "InvalidPayloadError";
     }
 }

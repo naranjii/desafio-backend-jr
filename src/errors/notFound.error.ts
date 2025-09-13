@@ -4,6 +4,6 @@ export class NotFoundError extends ApplicationError {
     constructor(message: string) {
         super(message);
         this.code = "NOT_FOUND";
-        this.name = "ApplicationError";
+        this.name = "NotFoundError";
     }
 }
