@@ -42,10 +42,18 @@ export const RequestRepository = {
             data: { status: ApprovalStatus.approved }
         });
     },
-    async update({ id, status, items }: { id: string, status: string, items: RequestItemInterface[] }) {
+    // Sobrescreve o items do Purchase Request e depois(?) sincroniza a table RequestItem ou a tabela deve ser chamada explicitamente?
+    async freePatch({ id, status, items }: { id: string, status: string, items: RequestItemInterface[] }) {
         return prisma.purchaseRequest.update({
             where: { id },
             data: { status, items: { deleteMany: {}, createMany: { data: items } } },
+            include: { items: true },
+        });
+    },
+    async itemPatch({ id, items }: { id: string, items: RequestItemInterface[] }) {
+        return prisma.purchaseRequest.update({
+            where: { id },
+            data: { items: { deleteMany: {}, createMany: { data: items } } },
             include: { items: true },
         });
     }

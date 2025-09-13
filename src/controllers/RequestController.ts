@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as RequestService from "../services/RequestService";
+import { userInfo } from "os";
 
 export async function create(req: Request, res: Response) {
   const userId = (req as any).user.id;
@@ -21,11 +22,16 @@ export async function getById(req: Request, res: Response) {
 
 export async function edit(req: Request, res: Response) {
   const data = req.body;
-  const updated = await RequestService.updateRequest(data.id, data.status, data.items);
+  const id = req.params.id;
+  const status = data.status;
+  const items = data.items;
+  let updated;
+  if (data.user.role === 'consultant') {
+    updated = await RequestService.consultantUpdateRequest(id, status, items);
+  } else if (data.user.role === 'approver') {
+    updated = await RequestService.approverUpdateRequest(id, status, items);}
   res.json(updated);
 }
-
-// para ambos abaixo falta limitar os pedidos a 'draft's e de submit para approve e reject
 
 export async function submit(req: Request, res: Response) {
   const id = req.params.id;

@@ -1,16 +1,43 @@
 import { RequestItemInterface } from "../interfaces/RequestItemInterface";
 import { RequestRepository } from "../repositories/RequestRepository";
 
+// Consultant role Services:
 export async function createRequest(userId: string, requestItem: RequestItemInterface[]) {
+  if (!requestItem || requestItem.length === 0) {
+    throw new Error("Error creating request: Request must contain at least one item");
+  }
+  if (requestItem.some(item => item.quantity <= 0)) {
+    throw new Error("Error creating request: All items must have a quantity greater than zero");
+  }
   return RequestRepository.create({ userId, requestItem });
 }
 
-export async function updateRequest(id: string, status: string, items: RequestItemInterface[]) {
-  return RequestRepository.update({ id, status, items });
+export async function submitRequest(id: string) {
+  if (!id) {
+    throw new Error("Error submitting request: Request ID is required to submit a request");
+  }
+  if (typeof id !== 'string' || id.trim() === '') {
+    throw new Error("Error submitting request: Invalid Request ID");
+  }
+  return RequestRepository.submit(id);
 }
 
-export async function submitRequest(id: string) {
-  return RequestRepository.submit(id);
+export async function consultantUpdateRequest(id: string, status: string, items: RequestItemInterface[]) {
+  if (!items || items.length === 0) {
+    throw new Error("Items array cannot be empty");
+  }
+  if (status !== "draft") {
+    throw new Error("Status must be 'draft' for consultant updates");
+  }
+  return RequestRepository.itemPatch({ id, items });
+}
+
+// Approver role Services:
+export async function approverUpdateRequest(id: string, status: string, items: RequestItemInterface[]) {
+  if (!items || items.length === 0) {
+    throw new Error("Items array cannot be empty");
+  }
+  return RequestRepository.freePatch({ id, status, items });
 }
 export async function approveRequest(id: string) {
   return RequestRepository.approve(id);
@@ -24,3 +51,8 @@ export async function getAllRequests() {
 export async function getRequestById(id: string) {
   return RequestRepository.getById(id);
 }
+
+// Admin Services?
+//export async function updateRequest(id: string, status: string, items: RequestItemInterface[]) {
+//  return RequestRepository.update({ id, status, items });
+// }
