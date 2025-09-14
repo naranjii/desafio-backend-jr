@@ -15,6 +15,6 @@ router.post("/:id/submit", RequestController.submit)
 
 router.patch("/:id", RequestController.update);
 
-router.post("/:id/approve", roleMiddleware, RequestController.approve);
-router.post("/:id/reject", roleMiddleware, RequestController.reject);
+router.post("/:id/approve", roleMiddleware(), RequestController.approve);
+router.post("/:id/reject", roleMiddleware(), RequestController.reject);
 export default router;
