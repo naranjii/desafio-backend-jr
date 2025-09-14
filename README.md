@@ -11,7 +11,7 @@
 <img width="950" height="460" alt="image" src="https://github.com/user-attachments/assets/5e86955b-625e-4799-956a-5f6e6d8a0c5b" />
 
 
-<i>Projeto de API desenvolvido como candidato à solução ao "Desafio Backend Junior", etapa do processo seletivo para vaga homônima em empresa do segmento Construtech.</i>
+<i>Projeto de API desenvolvido como solução ao "Desafio Backend Junior", etapa de processo seletivo para vaga homônima em empresa do segmento Construtech.</i>
 
 <h2>Estrutura de Arquivos 📂</h2>
 
