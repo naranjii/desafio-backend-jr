@@ -10,9 +10,9 @@ export const openApiDoc = createDocument({
 		description:
 			"Documentação gerada à partir de Zod schemas e controllers com ZodOpenAPI.",
 		contact: {
-			name:"M. Laranjeira",
-			url:"https://github.com/naranjii",
-			email:"matlaranjeira97@gmail.com"
+			name: "M. Laranjeira",
+			url: "https://github.com/naranjii",
+			email: "matlaranjeira97@gmail.com"
 		}
 	},
 	paths: {
@@ -172,25 +172,7 @@ export const openApiDoc = createDocument({
 				security: [{ bearerAuth: [] }],
 				tags: ["Requests"],
 			},
-			patch: {
-				summary: "Update request",
-				requestBody: {
-					content: {
-						"application/json": { schema: updateRequestDto },
-					},
-				},
-
-				responses: {
-					"200": {
-						description: "Request updated",
-						content: {
-							"application/json": { schema: z.any() },
-						},
-					},
-				},
-				security: [{ bearerAuth: [] }],
-				tags: ["Requests"],
-			},
+			
 		},
 		"/requests/{id}": {
 			get: {
@@ -215,10 +197,44 @@ export const openApiDoc = createDocument({
 										{ name: "Laptop", quantity: 2, price: 1200.5 },
 										{ name: "Mouse", quantity: 5, price: 25.99 },
 									],
-									status: "draft",
+									status: "ApprovalStatus",
 									createdAt: "2025-09-13T12:00:00Z",
+									history: [{
+										id: "history-id",
+										fromStatus: "null",
+										toStatus: "draft",
+										changedAt: "2025-09-14T01:53:29.097Z",
+										performedById: "User-uuid",
+										requestId: "requestId-uuid"
+									}]
 								},
 							},
+						},
+					},
+				},
+				security: [{ bearerAuth: [] }],
+				tags: ["Requests"],
+			},
+			patch: {
+				summary: "Update request",
+				parameters: [
+					{
+						name: "id",
+						in: "path",
+						required: true,
+					},
+				],
+				requestBody: {
+					content: {
+						"application/json": { schema: updateRequestDto },
+					},
+				},
+
+				responses: {
+					"200": {
+						description: "Request updated",
+						content: {
+							"application/json": { schema: z.any() },
 						},
 					},
 				},

@@ -14,7 +14,6 @@ export type CreateRequestDto = z.infer<typeof createRequestDto>;
 
 export const updateRequestDto = z.object({
 	...createRequestDto.shape,
-	id: z.uuid(),
 });
 
 export type UpdateRequestDto = z.infer<typeof updateRequestDto>;

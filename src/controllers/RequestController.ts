@@ -46,7 +46,8 @@ export async function update(
 	res: Response,
 ) {
 	try {
-		const { id, items } = req.body;
+		const { items } = req.body;
+		const id = req.params.id
 		const request = await RequestService.update(id, items);
 		res.json(request);
 	} catch (error) {
