@@ -8,7 +8,12 @@ export const openApiDoc = createDocument({
 		title: "Desafio Backend JR API",
 		version: "1.0.0",
 		description:
-			"OpenAPI documentation generated from Zod schemas and controllers",
+			"Documentação gerada à partir de Zod schemas e controllers com ZodOpenAPI.",
+		contact: {
+			name:"M. Laranjeira",
+			url:"https://github.com/naranjii",
+			email:"matlaranjeira97@gmail.com"
+		}
 	},
 	paths: {
 		"/auth/login": {
@@ -92,7 +97,7 @@ export const openApiDoc = createDocument({
 									totalRequests: 42,
 									approved: 30,
 									rejected: 5,
-									pending: 7,
+									draft: 7,
 								},
 							},
 						},
@@ -130,7 +135,7 @@ export const openApiDoc = createDocument({
 										{ name: "Laptop", quantity: 2, price: 1200.5 },
 										{ name: "Mouse", quantity: 5, price: 25.99 },
 									],
-									status: "pending",
+									status: "draft",
 									createdAt: "2025-09-13T12:00:00Z",
 								},
 							},
@@ -156,7 +161,7 @@ export const openApiDoc = createDocument({
 											{ name: "Laptop", quantity: 2, price: 1200.5 },
 											{ name: "Mouse", quantity: 5, price: 25.99 },
 										],
-										status: "pending",
+										status: "draft",
 										createdAt: "2025-09-13T12:00:00Z",
 									},
 								],
@@ -210,7 +215,7 @@ export const openApiDoc = createDocument({
 										{ name: "Laptop", quantity: 2, price: 1200.5 },
 										{ name: "Mouse", quantity: 5, price: 25.99 },
 									],
-									status: "pending",
+									status: "draft",
 									createdAt: "2025-09-13T12:00:00Z",
 								},
 							},
