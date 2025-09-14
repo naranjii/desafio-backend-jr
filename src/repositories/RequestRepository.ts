@@ -96,4 +96,14 @@ export const RequestRepository = {
 			});
 		});
 	},
+
+	async getByIdWithDetails(id: string){
+		return prisma.purchaseRequest.findUnique({
+			where: {id},
+			include: {
+				items: true,
+				history: true
+			}
+		})
+	}
 };

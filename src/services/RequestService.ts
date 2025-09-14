@@ -73,3 +73,9 @@ export async function getRequestById(id: string) {
   if (!request) throw new NotFoundError("Not Found");
   return request;
 }
+
+export async function getByIdWithDetails(id: string) {
+  const request = RequestRepository.getByIdWithDetails(id)
+  if (!request) throw new NotFoundError("Not Found");
+  return request;
+}
